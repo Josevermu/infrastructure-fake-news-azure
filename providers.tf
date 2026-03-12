@@ -1,6 +1,6 @@
 terraform {
 
-  required_version = ">= 1.5"
+  required_version = ">=1.5"
 
   required_providers {
     azurerm = {
@@ -8,6 +8,14 @@ terraform {
       version = "~>3.100"
     }
   }
+
+  backend "azurerm" {
+    resource_group_name  = "terraform-state-rg"
+    storage_account_name = "konradquiztfstate"
+    container_name       = "tfstate"
+    key                  = "konradquiz.terraform.tfstate"
+  }
+
 }
 
 provider "azurerm" {

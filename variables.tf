@@ -19,3 +19,9 @@ variable "encryption_secret_key" {
 variable "admin_password" {
   sensitive = true
 }
+
+variable "ghcr_username" {}
+
+variable "ghcr_token" {
+  sensitive = true
+}

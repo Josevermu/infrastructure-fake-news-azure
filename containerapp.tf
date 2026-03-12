@@ -16,6 +16,17 @@ resource "azurerm_container_app" "backend" {
     type = "SystemAssigned"
   }
 
+  secret {
+    name  = "ghcr-password"
+    value = var.ghcr_token
+  }
+
+  registry {
+    server               = "ghcr.io"
+    username             = var.ghcr_username
+    password_secret_name = "ghcr-password"
+  }
+
   template {
 
     container {
@@ -31,14 +42,11 @@ resource "azurerm_container_app" "backend" {
         value = "jdbc:sqlserver://${azurerm_mssql_server.sql.name}.database.windows.net:1433;database=${azurerm_mssql_database.db.name};authentication=ActiveDirectoryManagedIdentity"
       }
 
-      env {
-        name  = "CORS_ALLOWED_ORIGINS"
-        value = var.cors_allowed_origins
-      }
-
     }
 
   }
+
+}
 
   ingress {
 
